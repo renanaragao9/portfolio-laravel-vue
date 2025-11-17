@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class Campaign extends BaseModel
 {
     protected $fillable = [
@@ -24,17 +28,17 @@ class Campaign extends BaseModel
         ];
     }
 
-    public function ongProfile()
+    public function ongProfile(): BelongsTo
     {
         return $this->belongsTo(OngProfile::class);
     }
 
-    public function donations()
+    public function donations(): HasMany
     {
         return $this->hasMany(Donation::class);
     }
 
-    public function categories()
+    public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'campaign_category');
     }

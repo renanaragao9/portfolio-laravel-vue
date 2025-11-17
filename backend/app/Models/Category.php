@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Category extends BaseModel
 {
     protected $fillable = [
@@ -9,7 +11,7 @@ class Category extends BaseModel
         'icon',
     ];
 
-    public function campaigns()
+    public function campaigns(): BelongsToMany
     {
         return $this->belongsToMany(Campaign::class, 'campaign_category');
     }

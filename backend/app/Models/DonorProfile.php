@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+
 class DonorProfile extends BaseModel
 {
     protected $fillable = [
@@ -11,12 +14,12 @@ class DonorProfile extends BaseModel
         'user_id',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function address()
+    public function address(): MorphOne
     {
         return $this->morphOne(Address::class, 'addressable');
     }

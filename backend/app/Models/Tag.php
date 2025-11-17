@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Tag extends BaseModel
 {
     protected $fillable = [
@@ -9,7 +11,7 @@ class Tag extends BaseModel
         'icon',
     ];
 
-    public function ongProfiles()
+    public function ongProfiles(): BelongsToMany
     {
         return $this->belongsToMany(OngProfile::class, 'ong_tag');
     }

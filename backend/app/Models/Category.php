@@ -6,6 +6,7 @@ class Category extends BaseModel
 {
     protected $fillable = [
         'name',
+        'icon',
     ];
 
     public function campaigns()

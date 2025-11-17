@@ -36,6 +36,12 @@ class BaseModel extends Model
 
     public function tapActivity(Activity $activity): void
     {
-        $activity->causer_id = Auth::guard('sanctum')->id();
+        try {
+            if (Auth::guard('sanctum')->check()) {
+                $activity->causer_id = Auth::guard('sanctum')->id();
+            }
+        } catch (\Exception $e) {
+            // Guard not defined or other error, skip
+        }
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('asaas_pix_code')->nullable();
             $table->date('transaction_date');
             $table->date('payment_date')->nullable();
-            $table->foreignId('compaign_id')->constrained('compaigns')->onDelete('cascade');
+            $table->foreignId('compaign_id')->constrained('campaigns')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('campaign_category', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('campaign_id')->constrained('compaigns')->onDelete('cascade');
+            $table->foreignId('campaign_id')->constrained('campaigns')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

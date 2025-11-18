@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CampaignController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\DonorProfileController;
 use App\Http\Controllers\Api\OngProfileController;
 use App\Http\Controllers\Api\TagController;
@@ -16,4 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('ong-profiles', OngProfileController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('tags', TagController::class);
+    Route::apiResource('campaigns', CampaignController::class);
+    Route::apiResource('donations', DonationController::class);
 });

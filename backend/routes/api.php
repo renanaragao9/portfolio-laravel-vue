@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DonorProfileController;
 use App\Http\Controllers\Api\OngProfileController;
+use App\Http\Controllers\Api\TagController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -14,4 +15,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('donor-profiles', DonorProfileController::class);
     Route::apiResource('ong-profiles', OngProfileController::class);
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('tags', TagController::class);
 });

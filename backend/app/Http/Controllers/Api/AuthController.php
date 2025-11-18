@@ -2,44 +2,46 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\Auth\UserResource;
+use App\Services\Auth\LoginService;
+use App\Services\Auth\LogoutService;
+use App\Services\Auth\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+    public function login(
+        LoginRequest $loginRequest,
+        LoginService $loginService
+    ): JsonResponse {
+        $data = $loginRequest->validated();
+        $result = $loginService->run($data);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $user = Auth::user();
-            $token = $user->createToken('API Token')->plainTextToken;
-
-            return response()->json([
-                'user' => $user,
-                'token' => $token,
-            ]);
-        }
-
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
+        return $this->successResponse([
+            'user' => new UserResource($result['user']),
+            'token' => $result['token'],
+        ], 'Login realizado com sucesso');
     }
 
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
+    public function logout(
+        Request $request,
+        LogoutService $logoutService
+    ): JsonResponse {
+        $data = $request->user();
+        $logoutService->run($data);
 
-        return response()->json(['message' => 'Logged out successfully']);
+        return $this->successResponse(null, 'Logout realizado com sucesso');
     }
 
-    public function user(Request $request)
-    {
-        return response()->json($request->user());
+    public function user(
+        Request $request,
+        UserService $userService
+    ): UserResource {
+        $data = $request->user();
+        $user = $userService->run($data);
+
+        return new UserResource($user);
     }
 }
